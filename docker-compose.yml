@@ -1,0 +1,25 @@
+version: '3.8'
+
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.230.0/24
+          gateway: 172.16.230.1
+
+services:
+  thelinkbox:
+    image: thelinkbox-image:latest
+    volumes:
+      - ./thelinkbox:/home/thelinkbox
+    tty: true
+    ports:
+      - "80:80/tcp"
+      - "15425:15425/tcp"
+      - "2074:2074/udp"
+      - "5198:5198/udp"
+      - "5199:5199/udp"
+    networks:
+      custom_network:
+        ipv4_address: 172.16.230.10
